@@ -28,16 +28,16 @@ type Handler interface {
 
 
 type Server struct {
-	address string
-	handlers map[string]Handler
+	Address string
+	Handlers map[string]Handler
 }
 
 func (server *Server) BindHandler(uri string, handler Handler) {
-	server.handlers[uri] = handler
+	server.Handlers[uri] = handler
 }
 
 func (server *Server) handle(request *Request)  {
-	h, exist := server.handlers[request.Uri]
+	h, exist := server.Handlers[request.Uri]
 	if !exist {
 		return
 	}
@@ -48,7 +48,7 @@ func (server *Server) handle(request *Request)  {
 
 func (server *Server) ListenAndServe() {
 
-	listener, err := net.Listen("tcp", server.address)
+	listener, err := net.Listen("tcp", server.Address)
 
 	check(err)
 

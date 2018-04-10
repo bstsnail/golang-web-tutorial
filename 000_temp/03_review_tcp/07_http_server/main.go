@@ -1,15 +1,21 @@
 package main
 
-import "fmt"
-import "../07_http_server/server"
+import (
+	"fmt"
+	"github.com/bstsnail/golang-web-tutorial/000_temp/03_review_tcp/07_http_server/server"
+)
+
 type RootHandler struct {
 }
 
-func (h *RootHandler) Handle(request *Request) {
+func (h *RootHandler) Handle(request *server.Request) {
 	fmt.Println("handle the request")
 }
 func main() {
-	var server = Server{":8080", make(map[string]Handler)}
-	server.BindHandler("/", &RootHandler{})
-	server.ListenAndServe()
+	s := &server.Server{
+		Address: ":8080",
+		Handlers: make(map[string]server.Handler),
+	}
+	s.BindHandler("/", &RootHandler{})
+	s.ListenAndServe()
 }
